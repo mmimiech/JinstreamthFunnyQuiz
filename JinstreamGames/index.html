@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Jinstream for Jin📱💻🖥️</title>
+  <style>
+    body {
+      font-family: 'Prompt', Arial;
+      background-color: #FFFFCC;
+      text-align: center;
+      padding: 80px;
+      transition: background-color 0.5s ease;
+    }
+    h1 {
+      color: #0b23ff;
+    }
+    .question {
+      font-size: 36px;
+      margin-bottom: 36px;
+    }
+    .btn {
+      display: block;
+      margin: 10px auto;
+      padding: 12px 24px;
+      background-color: #3cff00;
+      color: rgb(68, 0, 255);
+      border: none;
+      border-radius: 16px;
+      font-size: 24px;
+      cursor: pointer;
+      width: 250px;
+      transition: transform 0.2s ease;
+    }
+    .btn:hover {
+      background-color: #93e9ff;
+      transform: scale(1.05);
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 36px;
+      color: #ff00b3;
+      transition: opacity 0.5s ease;
+    }
+
+    .cute-box {
+      background: linear-gradient(135deg, #ffe6f7, #e6f0ff);
+      border: 3px dashed #ff99cc;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(255, 153, 204, 0.5);
+      animation: popUp 0.6s ease;
+    }
+
+    .cute-box img {
+      width: 100%;
+      border-radius: 16px;
+      border: 4px dashed #ff99cc;
+      margin-bottom: 20px;
+      box-shadow: 0 0 12px rgba(255, 153, 204, 0.7);
+    }
+
+    .cute-box p {
+      font-size: 20px;
+      color: #99004d;
+      margin-bottom: 10px;
+    }
+
+    .cute-box button {
+      background-color: #ffccff;
+      color: #660066;
+      padding: 12px 20px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(102, 0, 102, 0.3);
+    }
+
+    .cute-box button:hover {
+      background-color: #ffe6ff;
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -50px;
+      animation: floatUp 6s infinite ease-in;
+      font-size: 30px;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { bottom: -50px; opacity: 0.7; }
+      100% { bottom: 100%; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>📱💻🖥️Jinstream for Jin🩷🩵💛</h1>
+  <div id="quiz">
+    <div class="question" id="question"></div>
+    <button class="btn" onclick="checkAnswer(0)" id="btn0"></button>
+    <button class="btn" onclick="checkAnswer(1)" id="btn1"></button>
+    <button class="btn" onclick="checkAnswer(2)" id="btn2"></button>
+    <button class="btn" onclick="checkAnswer(3)" id="btn3"></button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "เพลงไหนของ Jin ที่ร่วมงานกับวง Coldplay?",
+        choices: ["Tonight", "Super Tuna", "The Astronaut", "Abyss"],
+        answer: 2
+      },
+      {
+        question: "เพลงอะไรที่กลายเป็นไวรัลเพราะท่าเต้นน่ารัก?",
+        choices: ["Super Tuna", "Epiphany", "Heart on the Window", "Dream Glow"],
+        answer: 0
+      },
+      {
+        question: "เพลง 'Epiphany' สื่อถึงอะไร?",
+        choices: ["ความรักที่ไม่สมหวัง", "การรักตัวเอง", "การเดินทาง", "ความฝัน"],
+        answer: 1
+      },
+      {
+        question: "เพลง 'I'll Be There' ปล่อยในปีใด?",
+        choices: ["2020", "2022", "2023", "2024"],
+        answer: 3
+      },
+      {
+        question: "ถ้าพี่จินมีพลังวิเศษ 1 อย่าง เขาจะ...?",
+        choices: ["เสกอาหารกินได้ตลอดเวลา", "ทำเสียงปลุกให้อาร์มี่ทุกเช้า", "กลายเป็น Worldwide Handsome x2", "เสกปลาทูน่าให้เต้นพร้อมกันทั่วโลก"],
+        answer: 2
+      },
+      {
+        question: "เสียงร้องของพี่จินเหมือนอะไร?",
+        choices: ["น้ำผึ้งเคลือบคาราเมล", "เสียงฟ้าร้องที่อ่อนโยน", "ก้อนเมฆนุ่มๆที่ลอยลงมาเล่นกับใจอาร์มี่", "เสียงกระดิ่งแมวในโลกคู่ขนาน"],
+        answer: 2
+      },
+      {
+        question: "ถ้าพี่จินส่งข้อความมาว่า กินข้าวยังจ๊ะ คุณจะ...?",
+        choices: ["ตอบว่า กินแล้ว แต่ถ้าพี่อยากเลี้ยง กินใหม่ก็ได้", "ถ่ายรูปข้าวให้ดู พร้อมสลิปโอน", "ยังไม่กินรอพี่อยู่", "สติหลุด พิมพ์ผิดเป็นภาษาแบ้ดชอว์ตี้"],
+        answer: 0
+      },
+      {
+        question: "ถ้าพี่จินเขียนนิยายรัก พี่จินจะตั้งชื่อเรื่องว่า?",
+        choices: ["ชัมชี่วิลยูแมรี่มี?", "เธอกับฉันและทูน่าของเรา", "เสียงนั้นฉันจำได้ ฮี่ ฮี่ ฮี่", "ยืนงงในดง Worldwide Handsome"],
+        answer: 0
+      },
+      {
+        question: "ถ้าพี่จินติดเกาะกับคุณแค่ 2 คน คุณจะเอาอะไรไปด้วย?",
+        choices: ["กล้องไว้ถ่ายสุดหล่อทุกมุมทุกองศา", "ลำโพงไว้ให้พี่จินเต้นชัมชี่", "เต็นท์เพราะจะติดเกาะด้วยกันตลอดไป", "แค่มีพี่จินคนเดียวอยู่เคียงข้างก็พอแล้วจ้า"],
+        answer: 3
+      },
+      {
+        question: "ติ่งสายเปย์ตัวแม่เวลามีสินค้าวงออกใหม่ คุณจะ...?",
+        choices: ["ท่องไว้ ไม่ซื้อ ดูอย่างเดียว", "ดูยอดเงินในบัญชี ทำใจไม่ซื้อ", "กดซื้อก่อน แล้วค่อยร้องไห้ทีหลัง", "ท่องไว้ ของมันต้องมีๆๆๆ"],
+        answer: 2
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      q.choices.forEach((choice, index) => {
+        document.getElementById("btn" + index).textContent = choice;
+      });
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(choice) {
+      if (choice === quizData[currentQuestion].answer) {
+        score++;
+        document.body.style.backgroundColor = "#ccffe6";
+        document.getElementById("result").textContent = "ถูกต้อง! เก่งมาก!";
+      } else {
+        document.body.style.backgroundColor = "#ffd6d6";
+        document.getElementById("result").textContent = "ตอบผิดน้า เควนชาน่า เตง เน้ง เนง เนง เนง";
+      }
+
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        setTimeout(() => {
+          document.body.style.backgroundColor = "#FFFFCC";
+          loadQuestion();
+        }, 1500);
+      } else {
+        setTimeout(showFinalResult, 1500);
+      }
+    }
+
+    function showFinalResult() {
+      document.getElementById("quiz").innerHTML = `
+        <h2>จบเกมแล้ว!</h2>
+        <p>คุณได้คะแนน ${score} จาก ${quizData.length}</p>
+        <p>${score === quizData.length ? "อาร์มี่ตัวจริง!" : "ลองใหม่ได้น้าามาแก้มือกันค่ะคนเก่ง~"}</p>
+        <div class="cute-box">
+            <img src="https://imgur.com/a/xpZ0Ekq" />
+          <p>KSJ2 IS COMING</p>
+          <p>ECHO IS COMING</p>
+          <p>สามารถโดเนทซัพพอร์ตพี่จินได้ที่นี่ (ไม่บังคับค่ะ)</p>
+          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScRSeVLjB3zLFLmsJ8tSyASzcJPT999_CPVCbitcSyf92yehQ/viewform')">Donation Click</button>
+        </div>
+
+        <p>ขอบคุณทุกท่านที่ซัพพอร์ตค่ะ🙏🏻🙇🏻‍♀️🩷🩵💛</p>
+      `;
+    }
+
+    loadQuestion();
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "floating-heart";
+      heart.textContent = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 800);
+  </script>
+</body>
+</html>

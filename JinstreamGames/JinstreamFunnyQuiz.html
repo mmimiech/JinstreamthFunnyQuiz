@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Jinstream for Jin📱💻🖥️
+</title>
+  <style>
+    body {
+      font-family: 'Prompt', Arial;
+      background-color: #FFFFCC;
+      text-align: center;
+      padding: 80px;
+    }
+    h1 {
+      color: #0b23ff;
+    }
+    .question {
+      font-size: 36px;
+      margin-bottom: 36px;
+    }
+    .btn {
+      display: block;
+      margin: 10px auto;
+      padding: 12px 24px;
+      background-color: #3cff00;
+      color: rgb(68, 0, 255);
+      border: none;
+      border-radius: 16px;
+      font-size: 24px;
+      cursor: pointer;
+      width: 250px;
+    }
+    .btn:hover {
+      background-color: #93e9ff;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 36px;
+      color: #ff00b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>📱💻🖥️Jinstream for Jin❤️💙💚
+</h1>
+  <div id="quiz">
+    <div class="question" id="question"></div>
+    <button class="btn" onclick="checkAnswer(0)" id="btn0"></button>
+    <button class="btn" onclick="checkAnswer(1)" id="btn1"></button>
+    <button class="btn" onclick="checkAnswer(2)" id="btn2"></button>
+    <button class="btn" onclick="checkAnswer(3)" id="btn3"></button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "เพลงไหนของ Jin ที่ร่วมงานกับวง Coldplay?",
+        choices: ["Tonight", "Super Tuna", "The Astronaut", "Abyss"],
+        answer: 2
+      },
+      {
+        question: "เพลงอะไรที่กลายเป็นไวรัลเพราะท่าเต้นน่ารัก?",
+        choices: ["Super Tuna", "Epiphany", "Heart on the Window", "Dream Glow"],
+        answer: 0
+      },
+      {
+        question: "เพลง 'Epiphany' สื่อถึงอะไร?",
+        choices: ["ความรักที่ไม่สมหวัง", "การรักตัวเอง", "การเดินทาง", "ความฝัน"],
+        answer: 1
+      },
+      {
+        question: "เพลง 'I'll Be There' ปล่อยในปีใด?",
+        choices: ["2020", "2022", "2023", "2024"],
+        answer: 3
+      },
+      {
+        question: "ถ้าพี่จินมีพลังวิเศษ 1 อย่าง เขาจะ...?",
+        choices: ["เสกอาหารกินได้ตลอดเวลา", "ทำเสียงปลุกให้อาร์มี่ทุกเช้า", "กลายเป็น Worldwide Handsome x2", "เสกปลาทูน่าให้เต้นพร้อมกันทั่วโลก"],
+        answer: 2
+      },
+      {
+        question: "เสียงร้องของพี่จินเหมือนอะไร?",
+        choices: ["น้ำผึ้งเคลือบคาราเมล", "เสียงฟ้าร้องที่อ่อนโยน", "ก้อนเมฆนุ่มๆที่ลอยลงมาเล่นกับใจอาร์มี่", "เสียงกระดิ่งแมวในโลกคู่ขนาน"],
+        answer: 2
+      },
+      {
+        question: "ถ้าพี่จินส่งข้อความมาว่า กินข้าวยังจ๊ะ คุณจะ...?",
+        choices: ["ตอบว่า กินแล้ว แต่ถ้าพี่อยากเลี้ยง กินใหม่ก็ได้", "ถ่ายรูปข้าวให้ดู พร้อมสลิปโอน", "ยังไม่กินรอพี่อยู่", "สติหลุด พิมพ์ผิดเป็นภาษาแบ้ดชอว์ตี้"],
+        answer: 0
+      },
+      {
+        question: "ถ้าพี่จินเขียนนิยายรัก พี่จินจะตั้งชื่อเรื่องว่า?",
+        choices: ["ชัมชี่วิลยูแมรี่มี?", "เธอกับฉันและทูน่าของเรา", "เสียงนั้นฉันจำได้ ฮี่ ฮี่ ฮี่", "ยืนงงในดง Worldwide Handsome"],
+        answer: 0
+      },
+      {
+        question: "ถ้าพี่จินติดเกาะกับคุณแค่ 2 คน คุณจะเอาอะไรไปด้วย?",
+        choices: ["กล้องไว้ถ่ายสุดหล่อทุกมุมทุกองศา", "ลำโพงไว้ให้พี่จินเต้นชัมชี่", "เต็นท์เพราะจะติดเกาะด้วยกันตลอดไป", "แค่มีพี่จินคนเดียวอยู่เคียงข้างก็พอแล้วจ้า"],
+        answer: 3
+      },
+      {
+        question: "ติ่งสายเปย์ตัวแม่เวลามีสินค้าวงออกใหม่ คุณจะ...?",
+        choices: ["ท่องไว้ ไม่ซื้อ ดูอย่างเดียว", "ดูยอดเงินในบัญชี ทำใจไม่ซื้อ", "กดซื้อก่อน แล้วค่อยร้องไห้ทีหลัง", "ท่องไว้ ของมันต้องมีๆๆๆ"],
+        answer: 2
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      q.choices.forEach((choice, index) => {
+        document.getElementById("btn" + index).textContent = choice;
+      });
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(choice) {
+      if (choice === quizData[currentQuestion].answer) {
+        score++;
+        document.getElementById("result").textContent = "ถูกต้อง! เก่งมาก!";
+      } else {
+        document.getElementById("result").textContent = "ตอบผิดน้า เควนชาน่า เตง เน้ง เนง เนง เนง";
+      }
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        setTimeout(loadQuestion, 1500);
+      } else {
+        setTimeout(showFinalResult, 1500);
+      }
+    }
+
+    function showFinalResult() {
+      document.getElementById("quiz").innerHTML = `
+        <h2>จบเกมแล้ว!</h2>
+        <p>คุณได้คะแนน ${score} จาก ${quizData.length}</p>
+        <p>${score === quizData.length ? "อาร์มี่ตัวจริง!" : "ลองใหม่ได้น้าามาแก้มือกันค่ะคนเก่ง~"}</p>
+        <p>KSJ2กำลังจะมาแล้ว สามารถโดเนทซพัพอร์ตมาได้นะคะ (ไม่บังคับค่ะ)</p>
+        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScRSeVLjB3zLFLmsJ8tSyASzcJPT999_CPVCbitcSyf92yehQ/viewform')">Donation Click</button>
+        <p>ขอบคุณทุกท่านที่ซัพพอร์ตค่ะ🙏🏻🙇🏻‍♀️❤️💙💚💜
+</p>
+      `;
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
